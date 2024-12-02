@@ -104,8 +104,8 @@ const Upload = () => {
     doc.setFont("helvetica", "normal");
 
     // Définir les colonnes et les lignes du tableau
-    const tableColumn = ["Nom de l'Élève", "Présence"];
-    const tableRows = students.map(student => [student, ""]); // Laisser la colonne "Présence" vide
+    const tableColumn = ["Nom de l'Élève", "Présence", "Confirmation par mail"];
+    const tableRows = students.map(student => [student, "", ""]); // Ajouter une cellule vide pour la nouvelle colonne
 
     // Configurer le tableau avec les styles souhaités
     doc.autoTable({
@@ -114,11 +114,12 @@ const Upload = () => {
       body: tableRows,
       styles: { 
         fontSize: 12, // Taille de la police
-        cellPadding: 5, // Espacement des cellules
+        cellPadding: 6, // Espacement des cellules augmenté
         halign: 'left', // Alignement horizontal du texte
         valign: 'middle', // Alignement vertical du texte
         lineWidth: 0.1, // Épaisseur des bordures
         lineColor: [0, 0, 0], // Couleur des bordures (noir)
+        minCellHeight: 10, // Hauteur minimale des cellules
       },
       headStyles: { 
         fillColor: "#2BB673", // Couleur de fond de l'en-tête
@@ -128,8 +129,9 @@ const Upload = () => {
         valign: 'middle',
       },
       columnStyles: {
-        0: { cellWidth: 130 }, // Largeur de la colonne des noms
+        0: { cellWidth: 80 }, // Largeur de la colonne des noms ajustée
         1: { cellWidth: 50 },  // Largeur de la colonne Présence
+        2: { cellWidth: 50 },  // Largeur de la colonne Confirmation par mail
       },
       margin: { left: 14, right: 14 },
       didParseCell: function (data) {
@@ -239,6 +241,7 @@ const Upload = () => {
                     <TableRow>
                       <TableCell align="center"><strong>Nom de l'Élève</strong></TableCell>
                       <TableCell align="center"><strong>Présence</strong></TableCell>
+                      <TableCell align="center"><strong>Confirmation par mail</strong></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -246,6 +249,7 @@ const Upload = () => {
                       <TableRow key={index}>
                         <TableCell sx={{ fontWeight: 'bold' }}>{student}</TableCell>
                         <TableCell align="center"></TableCell>
+                        <TableCell align="center"></TableCell> {/* Nouvelle cellule vide */}
                       </TableRow>
                     ))}
                   </TableBody>
